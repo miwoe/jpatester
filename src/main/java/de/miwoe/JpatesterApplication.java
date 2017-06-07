@@ -1,5 +1,6 @@
 package de.miwoe;
 
+import org.flywaydb.core.Flyway;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,5 +9,6 @@ public class JpatesterApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpatesterApplication.class, args);
+
 	}
 }

@@ -1,11 +1,9 @@
 package de.miwoe;
 
-import de.miwoe.model.Campaign;
-import de.miwoe.model.Job;
-import de.miwoe.model.JobStatus;
+import de.miwoe.model.*;
+
 import static org.assertj.core.api.Assertions.*;
 
-import de.miwoe.model.JobStatusBi;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +25,7 @@ public class JpatesterApplicationTests {
 	EntityManager entityManager;
 
 	Job job;
+	JobDetails jobDetails;
 	JobStatus jobStatus;
 	JobStatusBi jobStatusBi;
 	Campaign campaign;
@@ -35,6 +34,10 @@ public class JpatesterApplicationTests {
 		job = new Job();
 		job.setId(UUID.randomUUID().toString());
 		job.setName("MyJob");
+
+		jobDetails = new JobDetails();
+		jobDetails.setId(UUID.randomUUID());
+		jobDetails.setLargeDetail("laaaaarge");
 
 		jobStatus = new JobStatus();
 		jobStatus.setId(UUID.randomUUID().toString());
@@ -108,5 +111,17 @@ public class JpatesterApplicationTests {
 
 		entityManager.remove(job);
 		assertThat(entityManager.find(Campaign.class, campaign.getId())).isNotNull();
+	}
+
+	@Test
+	public void JobDetailsLazyTest() {
+		entityManager.persist(job);
+
+		jobDetails.setJob(job);
+		JobDetails saved = entityManager.merge(jobDetails);
+
+		JobDetails loaded = entityManager.find(JobDetails.class, saved.getId());
+
+
 	}
 }

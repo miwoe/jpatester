@@ -24,4 +24,7 @@ public class Job {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     Campaign campaign;
+
+    int ranking;
+
 }
